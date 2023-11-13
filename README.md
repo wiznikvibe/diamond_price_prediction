@@ -11,10 +11,7 @@ This project aims to predict the price of diamonds based on various features usi
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Data](#data)
-- [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
-- [Model Training](#model-training)
-- [Evaluation](#evaluation)
-- [Deployment](#deployment)
+
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -50,21 +47,7 @@ Diamonds come in various shapes, sizes, and qualities, influencing their market 
 
 The dataset used for this project contains information about various diamonds, including carat weight, cut, color, clarity, and price. The dataset is available in the [data](/data) directory.
 
-## Exploratory Data Analysis (EDA)
 
-Explore the dataset using Jupyter Notebooks to gain insights into the features and relationships. The EDA process is documented in [notebooks/EDA.ipynb](notebooks/EDA.ipynb).
-
-## Model Training
-
-The machine learning model is trained using the processed data. The training process and model selection are documented in [notebooks/Model_Training.ipynb](notebooks/Model_Training.ipynb).
-
-## Evaluation
-
-The model's performance is evaluated using various metrics, including Mean Absolute Error (MAE), Mean Squared Error (MSE), and R-squared. The evaluation results are discussed in [notebooks/Evaluation.ipynb](notebooks/Evaluation.ipynb).
-
-## Deployment
-
-For deployment, consider using cloud platforms or frameworks suitable for your requirements. This project does not include specific deployment scripts.
 
 ## Usage
 
