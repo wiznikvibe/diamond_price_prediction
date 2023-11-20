@@ -8,4 +8,4 @@ class DataIngestionArtifact:
 
 @dataclass 
 class DataValidationArtifact:
-    report_file_dir
+    report_file_dir: str

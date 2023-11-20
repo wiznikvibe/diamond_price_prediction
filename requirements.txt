@@ -3,6 +3,7 @@ numpy
 matplotlib
 seaborn 
 scikit-learn
+scipy
 flask
 pyaml
 dill
