@@ -4,6 +4,9 @@ matplotlib
 seaborn 
 scikit-learn
 flask
+pyaml
+dill
+
 
 
 - e.
