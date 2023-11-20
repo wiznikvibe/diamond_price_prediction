@@ -3,18 +3,16 @@ from src.logger import logging
 from src.exception import CustomException
 import pandas as pd 
 import os, sys
+from src.entity import artifact_entity
+from src.components.data_ingestion import DataIngestion
+
+training_pipeline_config = config_entity.TrainingPipelineConfig()
+
+data_ingestion_config = config_entity.DataIngestionConfig(training_pipeline_config=training_pipeline_config)
+data_ingestion = DataIngestion(data_ingestion_config=data_ingestion_config)
+data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
+print(data_ingestion_artifact)
 
 
 
 
-if __name__ == "__main__":
-    try:
-        training_pipeline_config = config_entity.TrainingPipelineConfig()
-        config = config_entity.DataIngestionConfig(training_pipeline_config)
-        print(config.dataset_path)
-        df = pd.read_csv(config.dataset_path)
-        print(df.shape)
-        logging.info("First Basic Setup")
-
-    except Exception as e:
-        raise CustomException(e, sys)
