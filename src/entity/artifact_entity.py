@@ -15,3 +15,7 @@ class DataTransformationArtifact:
     transformer_obj_dir: str
     transform_train_dir: str
     transform_test_dir: str
+
+@dataclass 
+class ModelTrainerArtifact:
+    model_obj_dir: str

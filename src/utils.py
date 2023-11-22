@@ -24,9 +24,9 @@ def save_numpy_arr(file_dir: str, array:np.array)->None:
         with open(file_dir, 'wb') as file_obj:
             np.save(file_obj, array)
             
-            
     except Exception as e:
         raise CustomException(e, sys)
+            
 
 
 def save_object(file_dir: str, obj:object)->None:
@@ -36,6 +36,15 @@ def save_object(file_dir: str, obj:object)->None:
         with open(file_dir, "wb") as file_obj:
             dill.dump(obj, file_obj)
             
-            
+    except Exception as e:
+        raise CustomException(e, sys)
+
+def load_object(file_dir: str):
+    try:
+        if not os.path.exists(file_dir):
+            raise Exception(f'File Directory:{file_dir} Does not exist')
+        with open(file_dir, 'rb') as file_obj:
+            return dill.load(file_obj)
+
     except Exception as e:
         raise CustomException(e, sys)
