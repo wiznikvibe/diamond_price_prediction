@@ -26,9 +26,17 @@ def save_numpy_arr(file_dir: str, array:np.array)->None:
             
     except Exception as e:
         raise CustomException(e, sys)
+
+def load_numpy_arr(file_dir: str):
+    try:
+        if not os.path.exists(file_dir):
+            raise Exception("Numpy File does not exists")
+        with open(file_dir, 'rb') as file_obj:
+            return np.load(file_obj)
+
+    except Exception as e:
+        raise CustomException(e, sys)
             
-
-
 def save_object(file_dir: str, obj:object)->None:
     try:
         logging.info("Saving the Transformer Object for Future Reference")
@@ -48,3 +56,5 @@ def load_object(file_dir: str):
 
     except Exception as e:
         raise CustomException(e, sys)
+
+

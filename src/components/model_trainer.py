@@ -2,6 +2,7 @@ import os, sys
 import numpy as np
 import pandas as pd 
 from src.logger import logging
+from src.utils import save_object, load_object, load_numpy_arr
 from src.exception import CustomException
 from src.entity import config_entity, artifact_entity
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
@@ -24,9 +25,8 @@ class ModelTrainer:
 
         return mse, mae, r2 
 
-    def evaluate_models(self, X, y, models): 
+    def evaluate_models(self, X_train, y_train, X_test, y_test, models)-> pd.DataFrame: 
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=30)
         models_list = []
         score_list = []
 
@@ -34,31 +34,61 @@ class ModelTrainer:
             model.fit(X_train, y_train)
             y_test_pred = model.predict(X_test)
             
-            # model_train_mse, model_train_mae, model_train_r2 = evaluate_regression(y_train_pred, y_train)
-            model_test_mse, model_test_mae, model_test_r2 = evaluate_regression(y_test_pred, y_test)
+            model_test_mse, model_test_mae, model_test_r2 = self.evaluate_regression(y_test_pred, y_test)
 
-            
-            
-            
             print(model_name)
             models_list.append(model_name)
-            # print('Model performance for Training set')
-            # print('- Mean Squared Error (MSE): {:.4f}'.format(model_train_mse))
-            # print('- Mean Absolute Error (MAE): {:.4f}'.format(model_train_mae))
-            # print('- R-squared: {:.4f}'.format(model_train_r2))
             
-
             print('----------------------------------')
 
             print('Model performance for Test set')
             print('- Mean Squared Error (MSE): {:.4f}'.format(model_test_mse))
             print('- Mean Absolute Error (MAE): {:.4f}'.format(model_test_mae))
             print('- R-squared: {:.4f}'.format(model_test_r2 * 100))
+            
+            logging.info('- Mean Squared Error (MSE): {:.4f}'.format(model_test_mse))
+            logging.info('- Mean Absolute Error (MAE): {:.4f}'.format(model_test_mae))
+            logging.info('- R-squared: {:.4f}'.format(model_test_r2 * 100))
 
             score_list.append(model_test_r2)
             print('=='*20)
         
         report = pd.DataFrame(list(zip(models_list, score_list)), columns=['Model Name', 'R2_Score']).sort_values(by=['R2_Score'], ascending=False)
         return report
+
+    def initiate_model_trainer(self)->artifact_entity.ModelTrainerArtifact:
+        try:
+            train_array = load_numpy_arr(self.data_transformation_artifact.transform_train_dir)
+            test_array = load_numpy_arr(file_dir=self.data_transformation_artifact.transform_test_dir)
+            
+            X_train, y_train = train_array[:,:-1], train_array[:,-1]
+            X_test, y_test = test_array[:,:-1], test_array[:,-1]
+
+            models = {
+                "Linear Regression": LinearRegression(),
+                "Lasso": Lasso(),
+                "Ridge": Ridge(),
+                "ElasticNet": ElasticNet(),
+                "RandomForestRegressor": RandomForestRegressor(),
+                "AdaBoostRegressor": AdaBoostRegressor(),
+                "GradientBoostingRegressor": GradientBoostingRegressor(),
+                "DecisionTreeRegressor": DecisionTreeRegressor()
+                
+            } 
+
+            model_report = self.evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test, models=models)
+            logging.info(model_report)
+            best_model = model_report[max(model_report['R2_Score'])]
+            logging.info(best_model)
+            
+        except Exception as e:
+            raise CustomException(e, sys)
+            
+            
+            
+            
+
+
+    
 
 

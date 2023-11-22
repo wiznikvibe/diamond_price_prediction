@@ -36,7 +36,7 @@ class DataValidationConfig:
 
 class DataTransformationConfig:
 
-    def __init__(self, training_pipeline_config:TrainingPipelineConfig):
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
         self.target_column = 'price'
         self.data_transformation_artifact = os.path.join(training_pipeline_config.artifact_dir,'data_transformation')
         self.transformer_obj_dir = os.path.join(self.data_transformation_artifact, 'transformer', TRANSFORMER_OBJ_FILE_NAME)
@@ -46,5 +46,5 @@ class DataTransformationConfig:
 class ModelTrainerConfig:
 
     def __init__(self, training_pipeline_config:TrainingPipelineConfig):
-        self.model_trainer_artifact = os.path.join(self.training_pipeline_config.artifact_dir,'model_trainer')
+        self.model_trainer_artifact = os.path.join(training_pipeline_config.artifact_dir,'model_trainer')
         self.model_obj_dir = os.path.join(self.model_trainer_artifact, MODEL_FILE_NAME)
