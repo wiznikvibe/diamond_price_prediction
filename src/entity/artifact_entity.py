@@ -9,3 +9,10 @@ class DataIngestionArtifact:
 @dataclass 
 class DataValidationArtifact:
     report_file_dir: str
+
+@dataclass 
+class DataTransformationArtifact:
+    transformer_obj_dir: str
+    target_encoder_dir: str
+    transform_train_dir: str
+    transform_test_dir: str

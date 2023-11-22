@@ -11,5 +11,29 @@ def write_yaml_file(file_path, data:dict):
         with open(file_path, 'w') as file:
             yaml.dump(data, file)
             file.close() 
+            
+    except Exception as e:
+        raise CustomException(e, sys)
+
+def save_numpy_arr(file_dir: str, array:np.array)->None:
+    try: 
+        logging.info("Saving the Transformered data inside a Numpy Object")
+        os.makedirs(os.path.dirname(file_dir), exist_ok=True)
+        with open(file_dir, 'wb') as file_obj:
+            np.save(file_obj, array)
+            file_dir.close()
+            
+    except Exception as e:
+        raise CustomException(e, sys)
+
+
+def save_object(file_dir: str, obj:object)->None:
+    try:
+        logging.info("Saving the Transformer Object for Future Reference")
+        os.makedirs(os.path.dirname(file_dir), exist_ok=True)
+        with open(file_dir, 'wb') as file_obj:
+            dill.dump(file_obj, obj)
+            file_obj.close()
+            
     except Exception as e:
         raise CustomException(e, sys)
