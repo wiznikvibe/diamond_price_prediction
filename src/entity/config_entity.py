@@ -40,7 +40,6 @@ class DataTransformationConfig:
         self.target_column = 'price'
         self.data_transformation_artifact = os.path.join(training_pipeline_config.artifact_dir,'data_transformation')
         self.transformer_obj_dir = os.path.join(self.data_transformation_artifact, 'transformer', TRANSFORMER_OBJ_FILE_NAME)
-        self.target_encoder_dir = os.path.join(self.data_transformation_artifact, 'transformer', TARGET_ENCODER_OBJ_FILE_NAME)
         self.transform_train_dir = os.path.join(self.data_transformation_artifact, 'transformer', TRAIN_FILE_NAME.replace('csv', 'npz'))
         self.transform_test_dir = os.path.join(self.data_transformation_artifact, 'transformer', TEST_FILE_NAME.replace('csv', 'npz'))
         
