@@ -53,7 +53,7 @@ class ModelTrainer:
             score_list.append(model_test_r2)
             print('=='*20)
         
-        report = pd.DataFrame(list(zip(models_list, score_list)), columns=['Model Name', 'R2_Score']).sort_values(by=['R2_Score'], ascending=False)
+        report = pd.DataFrame(list(zip(models_list, score_list)), columns=['Model_Name', 'R2_Score']).sort_values(by=['R2_Score'], ascending=False)
         return report
 
     def initiate_model_trainer(self)->artifact_entity.ModelTrainerArtifact:
@@ -78,8 +78,21 @@ class ModelTrainer:
 
             model_report = self.evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test, models=models)
             logging.info(model_report)
-            best_model = model_report[max(model_report['R2_Score'])]
-            logging.info(best_model)
+            
+            best_model = model_report[model_report.R2_Score == model_report.R2_Score.max()]
+            print(f"Best Model:{best_model['Model_Name']} || Best Model Score: {best_model['R2_Score']}")
+            logging.info(f"Best Model:{best_model['Model_Name']} || Best Model Score: {best_model['R2_Score']}")
+            best_model = best_model['Model_Name']
+
+            save_object(file_dir=self.model_trainer_config.model_obj_dir, obj=best_model)
+
+            model_trainer_artifact = artifact_entity.ModelTrainerArtifact(
+                model_obj_dir=self.model_trainer_config.model_obj_dir
+            )
+
+            return model_trainer_artifact
+
+            
             
         except Exception as e:
             raise CustomException(e, sys)
