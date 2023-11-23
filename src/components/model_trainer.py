@@ -69,7 +69,7 @@ class ModelTrainer:
                 "Lasso": Lasso(),
                 "Ridge": Ridge(),
                 "ElasticNet": ElasticNet(),
-                "RandomForestRegressor": RandomForestRegressor(),
+                "RandomForestRegressor": RandomForestRegressor(n_estimators=500, min_samples_split= 10, min_samples_leaf= 1, max_features= 'log2', max_depth= 80, bootstrap= True),
                 "AdaBoostRegressor": AdaBoostRegressor(),
                 "GradientBoostingRegressor": GradientBoostingRegressor(),
                 "DecisionTreeRegressor": DecisionTreeRegressor()
