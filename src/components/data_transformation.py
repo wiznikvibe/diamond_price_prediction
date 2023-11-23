@@ -62,10 +62,12 @@ class DataTransformation:
             test_df = pd.read_csv(self.data_ingestion_artifact.test_data_dir)
 
             logging.info(f"Reading the Train and Test Data, Train: {train_df.shape}|| Test: {test_df.shape}")
+            logging.info(f"Reading the Train and Test Data, Train: {train_df.columns}|| Test: {test_df.columns}")
 
             columns_to_drop = ['id' ,'depth', 'table', 'price']
             
             input_features_train_df = train_df.drop(columns_to_drop, axis=1, inplace=False)
+            logging.info(f"Input Features: {input_features_train_df.columns}")
             target_feature_train_df = train_df[self.data_transformation_config.target_column]
 
             input_features_test_df = test_df.drop(columns_to_drop, axis=1, inplace=False)
@@ -73,9 +75,13 @@ class DataTransformation:
 
             preprocessor = DataTransformation.get_data_transformer_object()
 
+            
+
             input_feature_train_arr = preprocessor.fit_transform(input_features_train_df)
             input_features_test_arr = preprocessor.transform(input_features_test_df)
 
+            logging.info(f'Preprocessor Features: {preprocessor.get_feature_names_out()}')
+            
             train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
             test_arr = np.c_[input_features_test_arr, np.array(target_feature_test_df)]
 

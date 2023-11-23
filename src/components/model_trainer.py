@@ -82,9 +82,10 @@ class ModelTrainer:
             best_model = model_report[model_report.R2_Score == model_report.R2_Score.max()]
             print(f"Best Model:{best_model['Model_Name']} || Best Model Score: {best_model['R2_Score']}")
             logging.info(f"Best Model:{best_model['Model_Name']} || Best Model Score: {best_model['R2_Score']}")
-            best_model = best_model['Model_Name']
+            best_model_name = best_model['Model_Name'].values[0]
+            save_model = models[best_model_name] 
 
-            save_object(file_dir=self.model_trainer_config.model_obj_dir, obj=best_model)
+            save_object(file_dir=self.model_trainer_config.model_obj_dir, obj=save_model)
 
             model_trainer_artifact = artifact_entity.ModelTrainerArtifact(
                 model_obj_dir=self.model_trainer_config.model_obj_dir
