@@ -24,7 +24,7 @@ class PredictionPipeline:
         except Exception as e:
             raise CustomException(e, sys)
 
-'carat', 'cut', 'color', 'clarity', 'x', 'y', 'z'
+
 class CustomData:
 
     def __init__(self, carat: float, cut: str, color: str, clarity: str, x: float, y: float, z: float):

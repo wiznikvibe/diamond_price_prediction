@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (your existing head content) ... -->
+    <script>
+        function showPredictionForm() {
+            var formContainer = document.getElementById("form-container");
+            
+            // Check if the form is already loaded
+            if (!formContainer.innerHTML.trim()) {
+                // Load the content of form.html into the form-container div
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        formContainer.innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.open("GET", "form.html", true);
+                xhr.send();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Diamond Price Prediction</h1>
+        
+        <!-- This is the container where the form will be loaded -->
+        <div id="form-container"></div>
+        
+        <!-- Button to trigger the loading of the form -->
+        <button onclick="showPredictionForm()">Predict Diamond Price</button>
+    </div>
+</body>
+</html>
