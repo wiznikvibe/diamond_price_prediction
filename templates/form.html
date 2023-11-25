@@ -2,7 +2,7 @@
 
 <head>
   <style>
-    /* Default Styles */
+    /* 
     body {
       font-family: 'Arial', sans-serif;
       background-color: #f2f2f2;
@@ -12,10 +12,30 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+    } */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      margin: 20px;
+    }
+    
+    .container {
+      background-color: #fff;
+      padding: 120px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 400px;
     }
 
-    .form-group {
-      margin-bottom: 15px;
+    form {
+      max-width: 400px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     label {
@@ -49,22 +69,12 @@
       background-color: #45a049;
     }
 
-    /* Light Theme */
-    .light-theme {
-      background-color: #fff;
-      color: #333;
-    }
-
-    /* Dark Theme */
-    .dark-theme {
-      background-color: #333;
-      color: #fff;
-    }
+    
   </style>
 </head>
 
 <body>
-  <div id="prediction-form">
+  <div id="container">
     <form action="{{url_for('predict')}}" method="POST" class="light-theme">
         <div class="form-group">
             <label for="carat">Carat:</label>
@@ -131,14 +141,7 @@
       </form>
   </div>
 
-  <script>
-    function toggleTheme() {
-      const form = document.querySelector('form');
-      form.classList.toggle('dark-theme');
-      form.classList.toggle('light-theme');
-    }
-  </script>
-  <button onclick="toggleTheme()">Toggle Theme</button>
+  
 </body>
 
 </html>
