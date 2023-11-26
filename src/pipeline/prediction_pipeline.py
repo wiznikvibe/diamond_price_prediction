@@ -7,10 +7,10 @@ from src.utils import load_object
 
 class PredictionPipeline:
     
-    def __init__(self):
-        self.base_directory = os.path.join('artifact', max(os.listdir('artifact')))
-        self.transformer_obj_path = os.path.join(self.base_directory,'data_transformation','transformer','transformer.pkl')
-        self.model_obj_path = os.path.join(self.base_directory,'model_trainer', 'model.pkl')
+    def __init__(self, base_directory='artifact'):
+        self.base_dir = os.path.join(base_directory, max(os.listdir('artifact')))
+        self.transformer_obj_path = os.path.join(self.base_dir,'data_transformation','transformer','transformer.pkl')
+        self.model_obj_path = os.path.join(self.base_dir,'model_trainer', 'model.pkl')
         
     def predict(self, features):
         try:
