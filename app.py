@@ -1,3 +1,6 @@
+import os, sys 
+from src.exception import CustomException
+from src.logger import logging
 from flask import Flask, render_template, request, jsonify
 from src.pipeline.prediction_pipeline import PredictionPipeline, CustomData
 
@@ -5,9 +8,12 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def home_page():
-    if request.method == "GET":
-        return render_template('home.html')
-    
+    try:
+        if request.method == "GET":
+            return render_template('home.html')
+    except Exception as e:
+        logging.info(f"{CustomException(e,sys)}")
+        raise CustomException(e,sys)    
     
     # else:
     #     data = CustomData(
@@ -27,28 +33,31 @@ def home_page():
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
-    if request.method == 'GET':
-        return render_template('form.html')
-    else:
-    
-        data = CustomData(
-            carat= float(request.form.get('carat')),
-            cut = request.form.get('cut'),
-            color = request.form.get("color"),
-            clarity = request.form.get('clarity'),
-            x = float(request.form.get('x')),
-            y = float(request.form.get('y')),
-            z = float(request.form.get('z')),
-        )
-    final_data = data.get_as_dataframe()
-    pipeline = PredictionPipeline()
-    prediction = pipeline.predict(final_data)
+    try:
+        if request.method == 'GET':
+            return render_template('form.html')
+        else:
+        
+            data = CustomData(
+                carat= float(request.form.get('carat')),
+                cut = request.form.get('cut'),
+                color = request.form.get("color"),
+                clarity = request.form.get('clarity'),
+                x = float(request.form.get('x')),
+                y = float(request.form.get('y')),
+                z = float(request.form.get('z')),
+            )
+        final_data = data.get_as_dataframe()
+        pipeline = PredictionPipeline()
+        prediction = pipeline.predict(final_data)
 
-    return render_template("result.html", final_result = round(prediction[0], 2))   
-
+        return render_template("result.html", final_result = round(prediction[0], 2))   
+    except Exception as e:
+        logging.info(f"{CustomException(e,sys)}")
+        raise CustomException(e,sys) 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",port=8080)
+    app.run(host="0.0.0.0",port=8080, debug=True)
 
 
 

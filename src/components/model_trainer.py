@@ -41,6 +41,7 @@ class ModelTrainer:
             
             print('----------------------------------')
 
+            print(f"{model_name}")
             print('Model performance for Test set')
             print('- Mean Squared Error (MSE): {:.4f}'.format(model_test_mse))
             print('- Mean Absolute Error (MAE): {:.4f}'.format(model_test_mae))
