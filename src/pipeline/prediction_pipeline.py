@@ -8,7 +8,11 @@ from src.utils import load_object
 class PredictionPipeline:
     
     def __init__(self, base_directory='artifact'):
-        self.base_dir = os.path.join(base_directory, max(os.listdir('artifact')))
+        self.base_directory = base_directory
+        if not os.path.exists(self.base_directory):
+            os.makedirs(self.base_directory, exist_ok=True)
+
+        self.base_dir = os.path.join(base_directory, max(os.listdir(base_directory)))
         self.transformer_obj_path = os.path.join(self.base_dir,'data_transformation','transformer','transformer.pkl')
         self.model_obj_path = os.path.join(self.base_dir,'model_trainer', 'model.pkl')
         
