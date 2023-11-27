@@ -7,10 +7,8 @@ scipy
 flask
 pyaml
 dill
-mlflow
+mlflow==2.2.2
 dvc
-pickle
-urllib
 
 
 - e.
