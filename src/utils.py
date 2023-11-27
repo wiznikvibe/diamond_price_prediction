@@ -58,3 +58,8 @@ def load_object(file_dir: str):
         raise CustomException(e, sys)
 
 
+# def get_latest_dir(file_dir: str):
+#     try:
+#         if not os.path.exists(file_dir):
+#             raise Exception("No Such File Directory")
+#         latest_folder = max(os.listdir(file_dir))

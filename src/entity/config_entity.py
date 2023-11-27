@@ -48,3 +48,6 @@ class ModelTrainerConfig:
     def __init__(self, training_pipeline_config:TrainingPipelineConfig):
         self.model_trainer_artifact = os.path.join(training_pipeline_config.artifact_dir,'model_trainer')
         self.model_obj_dir = os.path.join(self.model_trainer_artifact, MODEL_FILE_NAME)
+
+
+

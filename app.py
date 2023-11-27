@@ -1,6 +1,7 @@
 import os, sys 
 from src.exception import CustomException
 from src.logger import logging
+from src.entity import artifact_entity
 from flask import Flask, render_template, request, jsonify
 from src.pipeline.prediction_pipeline import PredictionPipeline, CustomData
 

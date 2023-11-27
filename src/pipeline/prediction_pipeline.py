@@ -1,5 +1,7 @@
 import os, sys 
+from datetime import datetime
 import pandas as pd 
+from src.entity.config_entity import MODEL_FILE_NAME, TRANSFORMER_OBJ_FILE_NAME
 from src.logger import logging 
 from src.exception import CustomException
 from src.utils import load_object
@@ -7,19 +9,29 @@ from src.utils import load_object
 
 class PredictionPipeline:
     
-    def __init__(self, base_directory='artifact'):
-        self.base_directory = base_directory
-        if not os.path.exists(self.base_directory):
-            os.makedirs(self.base_directory, exist_ok=True)
+    def __init__(self,):
+        self.latest_dir = self.get_latest_directory("artifact")
 
-        self.base_dir = os.path.join(base_directory, max(os.listdir(base_directory)))
-        self.transformer_obj_path = os.path.join(self.base_dir,'data_transformation','transformer','transformer.pkl')
-        self.model_obj_path = os.path.join(self.base_dir,'model_trainer', 'model.pkl')
+    
+    
+    def get_latest_directory(self, file_dir:str):
+        try:
+            all_dirs = [d for d in os.listdir(file_dir) if os.path.isdir(os.path.join(file_dir, d))]
+            date_objs = [datetime.strptime(d,'%m%d%Y__%H%M%S') for d in all_dirs]
+
+            latest_date = max(date_objs)
+            latest_directory = latest_date.strftime('%m%d%Y__%H%M%S')
+            return os.path.join(file_dir, latest_directory)
+        except Exception as e:
+            logging.info(e)
+            raise CustomException(e, sys) 
         
     def predict(self, features):
         try:
-            preprocessor = load_object(self.transformer_obj_path)
-            model = load_object(self.model_obj_path)
+            transformer_obj_path = os.path.join(self.latest_dir, "data_transformation", "transformer", TRANSFORMER_OBJ_FILE_NAME)
+            model_obj_path = os.path.join(self.latest_dir, "model_trainer", MODEL_FILE_NAME)
+            preprocessor = load_object(transformer_obj_path)
+            model = load_object(model_obj_path)
             
 
             scaled = preprocessor.transform(features)
