@@ -161,4 +161,3 @@ cython_debug/
 #.idea/
 notebook/download.png
 dataset/gemstone.csv
-artifact/
