@@ -10,7 +10,7 @@ from src.utils import load_object
 class PredictionPipeline:
     
     def __init__(self,):
-        self.latest_dir = self.get_latest_directory("C:/Users/nikhi/diamond_price_prediction/artifact")
+        self.latest_dir = self.get_latest_directory(r"C:/Users/nikhi/diamond_price_prediction/artifact")
 
     
     
