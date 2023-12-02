@@ -6,10 +6,9 @@ scikit-learn
 scipy
 flask
 pyaml
-dill
 mlflow==2.2.2
 dvc
-
+joblib
 
 
 - e.

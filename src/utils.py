@@ -1,6 +1,6 @@
 import os, sys 
 import yaml, dill 
-import pickle
+from joblib import load, dump
 import numpy as np
 import pandas as pd
 from src.logger import logging 
@@ -42,18 +42,16 @@ def save_object(file_dir: str, obj:object)->None:
     try:
         logging.info("Saving the Transformer Object for Future Reference")
         os.makedirs(os.path.dirname(file_dir), exist_ok=True)
-        with open(file_dir, "wb") as file_obj:
-            dill.dump(obj, file_obj)
+        dump(obj, file_dir)
             
     except Exception as e:
         raise CustomException(e, sys)
 
 def load_object(file_dir: str):
     try:
-        if not os.path.exists(file_dir):
-            raise Exception(f'File Directory:{file_dir} Does not exist')
-        with open(file_dir, 'rb') as file_obj:
-            return pickle.load(file_obj)
+        # if not os.path.exists(file_dir):
+        #     raise Exception(f'File Directory:{file_dir} Does not exist')
+        return load(file_dir)
 
     except Exception as e:
         raise CustomException(e, sys)
