@@ -65,16 +65,10 @@ class ModelTrainer:
             X_train, y_train = train_array[:,:-1], train_array[:,-1]
             X_test, y_test = test_array[:,:-1], test_array[:,-1]
 
+            
             models = {
-                "Linear Regression": LinearRegression(),
-                "Lasso": Lasso(),
-                "Ridge": Ridge(),
-                "ElasticNet": ElasticNet(),
-                "RandomForestRegressor": RandomForestRegressor(n_estimators=500, min_samples_split= 10, min_samples_leaf= 1, max_features= 'log2', max_depth= 80, bootstrap= True),
-                "AdaBoostRegressor": AdaBoostRegressor(),
+                "RandomForestRegressor": RandomForestRegressor(n_estimators=500, min_samples_split= 10, min_samples_leaf= 1, max_features= 'log2', max_depth= 80, bootstrap= True, random_state=42),
                 "GradientBoostingRegressor": GradientBoostingRegressor(),
-                "DecisionTreeRegressor": DecisionTreeRegressor()
-                
             } 
 
             model_report = self.evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test, models=models)

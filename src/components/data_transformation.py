@@ -56,22 +56,45 @@ class DataTransformation:
         except Exception as e:
             raise CustomException(e, sys) 
 
+
+    def outlier_treatment(self, df:pd.DataFrame, columns:list, multiplier:float=1.5)-> pd.DataFrame:
+        try:
+            treated_df = df.copy()
+            for col in columns:
+                q1 = treated_df[col].quantile(0.25)
+                q3 = treated_df[col].quantile(0.75)
+                iqr = q3 - q1
+
+                lower_bound = q1 - multiplier*iqr
+                upper_bound = q3 + multiplier*iqr
+
+                treated_df[col] = treated_df[col].apply(lambda x: lower_bound if x < lower_bound else (upper_bound if x > upper_bound else x))
+            return treated_df
+        except Exception as e:
+            raise CustomException(e, sys)
+            
+            
     def initiate_data_transformation(self)-> artifact_entity.DataTransformationArtifact:
         try:
             train_df = pd.read_csv(self.data_ingestion_artifact.train_data_dir)
             test_df = pd.read_csv(self.data_ingestion_artifact.test_data_dir)
+            numerical_columns = train_df.columns[train_df.dtypes != 'object']
+            outlier_treatment_train_df = self.outlier_treatment(df=train_df, columns=numerical_columns)
+            outlier_treatment_test_df = self.outlier_treatment(df=test_df, columns=numerical_columns)
+
 
             logging.info(f"Reading the Train and Test Data, Train: {train_df.shape}|| Test: {test_df.shape}")
             logging.info(f"Reading the Train and Test Data, Train: {train_df.columns}|| Test: {test_df.columns}")
 
             columns_to_drop = ['id' ,'depth', 'table', 'price']
             
-            input_features_train_df = train_df.drop(columns_to_drop, axis=1, inplace=False)
+            input_features_train_df = outlier_treatment_train_df.drop(columns_to_drop, axis=1, inplace=False)
             logging.info(f"Input Features: {input_features_train_df.columns}")
-            target_feature_train_df = train_df[self.data_transformation_config.target_column]
+            target_feature_train_df = outlier_treatment_train_df[self.data_transformation_config.target_column]
 
-            input_features_test_df = test_df.drop(columns_to_drop, axis=1, inplace=False)
-            target_feature_test_df = test_df[self.data_transformation_config.target_column]
+            input_features_test_df = outlier_treatment_test_df.drop(columns_to_drop, axis=1, inplace=False)
+
+            target_feature_test_df = outlier_treatment_test_df[self.data_transformation_config.target_column]
 
             preprocessor = DataTransformation.get_data_transformer_object()
 
