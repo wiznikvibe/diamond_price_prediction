@@ -34,7 +34,7 @@ Diamonds come in various shapes, sizes, and qualities, influencing their market 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/diamond-price-prediction.git
+   git clone [https://github.com/wiznikvibe/diamond_price_prediction.git]
    ```
 
 2. Install dependencies:
@@ -63,4 +63,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
-- The dataset used in this project is sourced from [source-link].
+- The dataset used in this project is sourced from 
