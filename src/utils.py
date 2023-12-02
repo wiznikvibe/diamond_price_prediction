@@ -1,5 +1,6 @@
 import os, sys 
 import yaml, dill 
+import pickle
 import numpy as np
 import pandas as pd
 from src.logger import logging 
@@ -52,7 +53,7 @@ def load_object(file_dir: str):
         if not os.path.exists(file_dir):
             raise Exception(f'File Directory:{file_dir} Does not exist')
         with open(file_dir, 'rb') as file_obj:
-            return dill.load(file_obj)
+            return pickle.load(file_obj)
 
     except Exception as e:
         raise CustomException(e, sys)
