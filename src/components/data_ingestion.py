@@ -16,7 +16,7 @@ class DataIngestion:
     def initiate_data_ingestion(self, )-> artifact_entity.DataIngestionArtifact:
         try:
             logging.info("Extracting dataset from the database.")
-            data = pd.read_csv(self.data_ingestion_config.dataset_dir).sample(35000)
+            data = pd.read_csv(self.data_ingestion_config.dataset_dir).sample(150000)
             logging.info(f"Dataset extraction complete, Shape of the data: {data.shape}")
             
             data.replace(to_replace='na', value=np.NAN, inplace=True)
