@@ -103,7 +103,7 @@ class DataTransformation:
             input_feature_train_arr = preprocessor.fit_transform(input_features_train_df)
             input_features_test_arr = preprocessor.transform(input_features_test_df)
 
-            logging.info(f'Preprocessor Features: {preprocessor.get_feature_names_out()}')
+            # logging.info(f'Preprocessor Features: {preprocessor.feature_names_in_()}')
             
             train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
             test_arr = np.c_[input_features_test_arr, np.array(target_feature_test_df)]
